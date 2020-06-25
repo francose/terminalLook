@@ -5,16 +5,11 @@ import { Container } from "react-bootstrap";
 // Components
 import Header from "./Common/header";
 import Terminal from "./Common/Welcome";
+import "./App.css";
 
 function App() {
   return (
-    <div
-      style={{
-        background: "black",
-        overFlowY: "hidden",
-        height: 1000,
-      }}
-    >
+    <div className={"App"}>
       <Terminal />
     </div>
 
