@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 //Feature reducers  headerr are here .....
-import subcribers from "./subscriberReducers";
+import messages from "./messagesReducers";
 
 const rootReducer = combineReducers({
   //Feature reducers here below
-  subcribers,
+  messages,
 });
 
 export default rootReducer;

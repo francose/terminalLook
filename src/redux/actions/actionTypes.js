@@ -1,1 +1,2 @@
-export const CREATE_SUBSCRIBER = "CREATE_SUBSCRIBER";
+export const ADD_MESSAGE = "ADD_MESSAGE";
+export const MESSAGES = "MESSAGES";
