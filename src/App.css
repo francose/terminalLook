@@ -1,4 +1,21 @@
 .App {
-  background-color: #131313;
+  background-color: #263238;
   min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.terminal {
+  width: 500px;
+}
+.terminal-input {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  /* background: coral; */
+}
+.terminal-output {
+  display: flex;
+  justify-content: space-between;
+  /* background: coral; */
 }
