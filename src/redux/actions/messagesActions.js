@@ -1,13 +1,10 @@
 import * as types from "./actionTypes";
+import initialState from "../reducers/initialState";
 
-export const add_message = (timestamp, value) => {
+export const add_message = (obj) => {
+  console.log(obj);
   return {
     type: types.ADD_MESSAGE,
-    timestamp: timestamp,
-    payload: value,
+    payload: obj,
   };
-};
-
-export const messages = () => {
-  return { type: types.MESSAGES };
 };

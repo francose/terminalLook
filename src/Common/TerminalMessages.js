@@ -1,98 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as actionsCreator from "../redux/actions/messagesActions";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 export function TerminalMessages() {
-  const message = useSelector((state) => state.messages);
+  const [data, setData] = useState([]);
+  const [id, setId] = useState(0);
+
+  const storeData = useSelector((state) => state.messages);
   const dispatch = useDispatch();
-
   const sentTime = new Date().toLocaleTimeString();
-  const sentDate = new Date().toLocaleDateString();
-
-  const [data, setData] = useState({ date: "", time: "", msg: "" });
+  // const sentDate = new Date().toLocaleDateString();
 
   const handleMessage = (event) => {
-    event.preventDefault(event);
-    setData({ date: sentDate, time: sentTime, msg: event.target.value });
+    event.preventDefault();
+    setData([event.target.value]);
   };
-  const handleSend = () => {
-    dispatch(actionsCreator.add_message(data.time, data.msg));
-    setData({ time: "", msg: "" });
-  };
+
   const keyPressed = (event) => {
-    if (event.key === "Enter") {
-      handleSend();
+    if (event.key === "Enter" && event.target.value !== "") {
+      setId(id + 1);
+      const payload = {
+        id: id,
+        timestamp: sentTime,
+        msg: data[0],
+      };
+
+      dispatch(actionsCreator.add_message(payload));
+      setData([]);
+
+      console.log(storeData[id - 1]);
     }
   };
 
   return (
-    <div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
+    <div style={{ marginLeft: 200 }}>
+      <input
+        onChange={(e) => {
+          handleMessage(e);
         }}
-      >
-        <p
-          style={{
-            textAlign: "right",
-            padding: 10,
-            width: 500,
-            color: "rgb(0,255,0)",
-            fontFamily: "monospace",
-            fontSize: 16,
-          }}
-        >
-          {data.date !== undefined ? null : "Today_:" + sentDate}
-        </p>
-      </div>
-      <div
-        style={{ display: "flex", justifyContent: "space-evenly", padding: 10 }}
-      >
-        <p
-          style={{
-            color: "rgb(0,255,0)",
-            fontFamily: "monospace",
-            fontSize: 16,
-            background: "transparent",
-          }}
-        >
-          {message.payload === undefined ? null : "~$ " + message.payload}
-        </p>
-        <p
-          style={{
-            color: "rgb(0,255,0)",
-            fontFamily: "monospace",
-            fontSize: 16,
-            background: "blue",
-          }}
-        >
-          {!message.timestamp ? null : "@" + message.timestamp}
-        </p>
-      </div>
-
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <input
-          style={{
-            color: "rgb(0,255,0)",
-            fontFamily: "monospace",
-            fontSize: 16,
-            width: 450,
-            borderTop: 0,
-            borderRight: 0,
-            borderLeft: 0,
-            outline: "none",
-            background: "transparent",
-          }}
-          onChange={(e) => handleMessage(e)}
-          onKeyDown={(e) => keyPressed(e)}
-        />
-      </div>
+        value={data}
+        onKeyDown={(e) => keyPressed(e)}
+      />
+      <div></div>
     </div>
   );
 }
