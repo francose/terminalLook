@@ -8,6 +8,7 @@
 .terminal {
   width: 500px;
 }
+
 .terminal-input {
   display: flex;
   justify-content: space-between;
@@ -18,4 +19,26 @@
   display: flex;
   justify-content: space-between;
   /* background: coral; */
+}
+.InputField {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: whitesmoke;
+  font-family: monospace;
+  font-size: 14px;
+  margin-top: -15px;
+  width: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+  .terminal {
+    width: 100vw;
+  }
+  .InputField {
+    width: 140px;
+    height: 25px;
+    margin-top: 0px;
+    /* background-color: antiquewhite; */
+  }
 }

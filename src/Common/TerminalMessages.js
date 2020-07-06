@@ -110,16 +110,7 @@ export function TerminalMessages() {
           </span>
         </div>
         <input
-          style={{
-            background: "transparent",
-            border: "none",
-            outline: "none",
-            color: "whitesmoke",
-            fontFamily: "monospace",
-            fontSize: 14,
-            marginTop: -15,
-            width: 300,
-          }}
+          className={"InputField"}
           onChange={(e) => {
             handleMessage(e);
           }}
