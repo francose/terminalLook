@@ -1,0 +1,2 @@
+.App{background-color:#263238;min-height:100vh;display:flex;justify-content:center}.terminal{width:500px}.terminal-input{padding-top:10px}.terminal-input,.terminal-output{display:flex;justify-content:space-between}.InputField{background:transparent;border:none;outline:none;color:#f5f5f5;font-family:monospace;font-size:14px;margin-top:-15px;width:300px}@media only screen and (max-width:600px){.terminal{width:100vw}.InputField{width:140px;height:25px;margin-top:0}}
+/*# sourceMappingURL=main.e8e243cd.chunk.css.map */
