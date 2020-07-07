@@ -4,7 +4,7 @@ import { Container } from "react-bootstrap";
 
 // Components
 
-import TerminalMessages from "./Common/TerminalMessages";
+import TerminalMessages from "./MainScene/TerminalMessages";
 import "./App.css";
 
 function App() {

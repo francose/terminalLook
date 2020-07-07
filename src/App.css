@@ -2,6 +2,7 @@
   background-color: #263238;
   min-height: 100vh;
   display: flex;
+  padding-top: 20px;
   justify-content: center;
 }
 
@@ -13,11 +14,13 @@
   display: flex;
   justify-content: space-between;
   padding-top: 10px;
+
   /* background: coral; */
 }
 .terminal-output {
   display: flex;
   justify-content: space-between;
+
   /* background: coral; */
 }
 .InputField {
@@ -28,10 +31,43 @@
   font-family: monospace;
   font-size: 14px;
   margin-top: -15px;
+  margin-left: -35px;
   width: 300px;
+}
+@keyframes blinkingText {
+  0% {
+    color: whitesmoke;
+  }
+  49% {
+    color: whitesmoke;
+  }
+  60% {
+    color: transparent;
+  }
+  99% {
+    color: transparent;
+  }
+  100% {
+    color: whitesmoke;
+  }
+}
+.weicomeMessageBox {
+  border: 1px solid whitesmoke;
+}
+.welcomeMessage {
+  padding: 30px;
+  background: rgba(33, 150, 243, 0.05);
+  animation: blinkingText 1.5s infinite;
+
+  font-family: Monaco;
+  text-align: center;
+  font-size: 12px;
 }
 
 @media only screen and (max-width: 600px) {
+  .App {
+    padding-top: 30px;
+  }
   .terminal {
     width: 100vw;
   }
