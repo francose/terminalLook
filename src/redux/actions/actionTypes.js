@@ -1,2 +1,2 @@
 export const ADD_MESSAGE = "ADD_MESSAGE";
-export const MESSAGES = "MESSAGES";
+export const COMMANDS_LIST = "COMMANDS_LIST";

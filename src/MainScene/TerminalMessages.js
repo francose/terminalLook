@@ -1,21 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
-import * as actionsCreator from "../redux/actions/messagesActions";
+import * as MessageActionsCreator from "../redux/actions/messagesActions";
 import { useSelector, useDispatch, shallowEqual } from "react-redux";
 
 export function TerminalMessages() {
   const [data, setData] = useState([]);
   const [flag, setFlag] = useState(false);
-  const [vis, setVis] = useState(false);
   const [id, setId] = useState(0);
-  const storeData = useSelector((state) => state.messages);
-  const dispatch = useDispatch();
+  const [commands, setCommands] = useState([]);
+
   const sentTime = new Date().toLocaleTimeString();
+  const sentDate = new Date().toLocaleDateString();
+
+  const storeData = useSelector((state) => state.messages);
+  const readyCommands = useSelector((state) => Object.values(state.commands));
+
+  const dispatch = useDispatch();
   const payload = {
     id: id,
     timestamp: sentTime,
     msg: data[0],
   };
-  const sentDate = new Date().toLocaleDateString();
 
   const handleMessage = (event) => {
     event.preventDefault();
@@ -32,14 +36,14 @@ export function TerminalMessages() {
   const keyPressed = (event) => {
     if (event.key === "Enter" && event.target.value !== "") {
       setId(id + 1);
-      dispatch(actionsCreator.add_message(payload));
+      dispatch(MessageActionsCreator.add_message(payload));
       setData([]);
       setFlag(false);
-      if (payload.msg === "./help_menu.sh") return setVis(true);
+      if (payload.msg.toLowerCase() === "--start") {
+        setCommands(readyCommands);
+      }
     }
   };
-
-  const hanndleMenu = (e) => {};
 
   return (
     <div>
@@ -53,13 +57,23 @@ export function TerminalMessages() {
         }}
       >
         last login: {sentDate} {sentTime} on ttys001
+        <span
+          style={{
+            padding: 2,
+            background: "lightgrey",
+            color: "#000",
+            fontFamily: "Monaco",
+            fontSize: 12,
+            marginLeft: 100,
+            textAlign: "right",
+          }}
+        >
+          MyOS
+        </span>
       </div>
-      <div
-        className={"weicomeMessageBox"}
-        style={{ visibility: !vis ? vis : "hidden" }}
-      >
+      <div className={"weicomeMessageBox"}>
         <div className={"welcomeMessage"}>
-          <span>please type => "./help_menu.sh" to start</span>
+          <span>please type => "--start" to begin </span>
         </div>
       </div>
 
@@ -87,6 +101,7 @@ export function TerminalMessages() {
                   fontFamily: "Monaco",
                   fontSize: 12,
                 }}
+                onChange={() => setCommandVal(e.msg)}
               >
                 {e.msg}
               </span>
@@ -107,6 +122,31 @@ export function TerminalMessages() {
             </div>
           </div>
         ))}
+
+        <div
+          style={{
+            padding: 2,
+            color: "whitesmoke",
+            fontFamily: "Monaco",
+            fontSize: 12,
+          }}
+        >
+          {commands.map((e, i) => (
+            <li
+              style={{
+                padding: 2,
+                color: "whitesmoke",
+                fontFamily: "Monaco",
+                fontSize: 12,
+                listStyleType: "none",
+              }}
+              key={i}
+            >
+              {">> "}
+              {e}
+            </li>
+          ))}
+        </div>
 
         {/* command line input section */}
         <div className={"terminal-input"}>
@@ -134,6 +174,7 @@ export function TerminalMessages() {
               {"~/"}
             </span>
           </div>
+
           <input
             className={"InputField"}
             onChange={(e) => {
