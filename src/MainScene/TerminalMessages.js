@@ -42,7 +42,7 @@ const CommandlineOuputFiled = (source) => {
   return source !== null
     ? source.source.map((e, i) => (
         <>
-          <div className={"terminal-output"} key={i}>
+          <div className={"terminal-output"}>
             <div>
               <span
                 style={{
@@ -52,6 +52,7 @@ const CommandlineOuputFiled = (source) => {
                   fontFamily: "Monaco",
                   fontSize: 12,
                 }}
+                key={i}
               >
                 {">>"}
               </span>
@@ -62,7 +63,6 @@ const CommandlineOuputFiled = (source) => {
                   fontFamily: "Monaco",
                   fontSize: 12,
                 }}
-                onChange={() => setCommandVal(e.msg)}
               >
                 {e.command}
               </span>
@@ -82,6 +82,45 @@ const CommandlineOuputFiled = (source) => {
                 {e.timestamp}
               </span>
             </div>
+          </div>
+          <div
+            style={{
+              padding: 2,
+              color: "whitesmoke",
+              fontFamily: "Monaco",
+              fontSize: 12,
+            }}
+          >
+            {!Array.isArray(e.output)
+              ? // <li
+                //   style={{
+                //     padding: 2,
+                //     color: "whitesmoke",
+                //     fontFamily: "Monaco",
+                //     fontSize: 12,
+                //     listStyleType: "none",
+                //   }}
+                //   // key={i}
+                // >
+                //   {"> "}
+                //   {e.output}
+                // </li>
+                null
+              : e.output.map((v) => (
+                  <li
+                    style={{
+                      padding: 2,
+                      color: "whitesmoke",
+                      fontFamily: "Monaco",
+                      fontSize: 12,
+                      listStyleType: "none",
+                    }}
+                    key={v}
+                  >
+                    {"> "}
+                    {v}
+                  </li>
+                ))}
           </div>
         </>
       ))
@@ -108,14 +147,34 @@ export function TerminalMessages() {
     output: commands,
   };
 
+  const handlingCommands = (selection) => {
+    if (!readyCommands.indexOf(selection)) {
+      for (const i in readyCommands) {
+        switch (readyCommands[i]) {
+          case "ls":
+            return setCommands((items) => [
+              ...items,
+              "opt",
+              "usr",
+              "bin",
+              "home ",
+              "etc",
+              "private",
+              "system",
+              "dev",
+            ]);
+          case "--start":
+            return setCommands(readyCommands);
+          default:
+            break;
+        }
+      }
+    }
+  };
+
   const handleMessage = (event) => {
     event.preventDefault();
-    if (event.target.value.length > 35) {
-      setFlag(true);
-    } else {
-      setFlag(false);
-    }
-
+    const x = event.target.value.length > 35 ? setFlag(true) : setFlag(false);
     setData([event.target.value]);
   };
 
@@ -123,9 +182,10 @@ export function TerminalMessages() {
     if (event.key === "Enter" && event.target.value !== "") {
       setId(id + 1);
       dispatch(MessageActionsCreator.add_message(payload));
-      setData([]);
       setFlag(false);
-      // handleOptions(payload.command.toLowerCase());
+      setData([]);
+      handlingCommands(data[0]);
+      setTimeout(() => setCommands([]), 1000);
     }
   };
 
@@ -136,6 +196,7 @@ export function TerminalMessages() {
       <div className={"terminal"}>
         {/* command line output section */}
         <CommandlineOuputFiled source={storeData} />
+
         {/* command line input section */}
 
         <div className={"terminal-input"}>
@@ -194,50 +255,3 @@ export function TerminalMessages() {
 }
 
 export default TerminalMessages;
-
-{
-  /* <div
-              style={{
-                padding: 2,
-                color: "whitesmoke",
-                fontFamily: "Monaco",
-                fontSize: 12,
-              }}
-            > */
-}
-{
-  /* {Array.isArray(e.output) ? (
-                e.output.map((e, i) => (
-                  <li
-                    style={{
-                      padding: 2,
-                      color: "whitesmoke",
-                      fontFamily: "Monaco",
-                      fontSize: 12,
-                      listStyleType: "none",
-                    }}
-                    key={i}
-                  >
-                    {"> "}
-                    {e}
-                  </li>
-                ))
-              ) : (
-                <li
-                  style={{
-                    padding: 2,
-                    color: "whitesmoke",
-                    fontFamily: "Monaco",
-                    fontSize: 12,
-                    listStyleType: "none",
-                  }}
-                  // key={i}
-                >
-                  {"> "}
-                  {e}
-                </li>
-              )} */
-}
-{
-  /* </div> */
-}
