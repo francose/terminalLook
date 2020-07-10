@@ -1,52 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as MessageActionsCreator from "../redux/actions/messagesActions";
-import { useSelector, useDispatch, shallowEqual } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-export function TerminalMessages() {
-  const [data, setData] = useState([]);
-  const [flag, setFlag] = useState(false);
-  const [id, setId] = useState(0);
-  const [commands, setCommands] = useState([]);
-
-  const sentTime = new Date().toLocaleTimeString();
-  const sentDate = new Date().toLocaleDateString();
-
-  const storeData = useSelector((state) => state.messages);
-  const readyCommands = useSelector((state) => Object.values(state.commands));
-
-  const dispatch = useDispatch();
-  const payload = {
-    id: id,
-    timestamp: sentTime,
-    msg: data[0],
-  };
-
-  const handleMessage = (event) => {
-    event.preventDefault();
-
-    if (event.target.value.length > 35) {
-      setFlag(true);
-    } else {
-      setFlag(false);
-    }
-
-    setData([event.target.value]);
-  };
-
-  const keyPressed = (event) => {
-    if (event.key === "Enter" && event.target.value !== "") {
-      setId(id + 1);
-      dispatch(MessageActionsCreator.add_message(payload));
-      setData([]);
-      setFlag(false);
-      if (payload.msg.toLowerCase() === "--start") {
-        setCommands(readyCommands);
-      }
-    }
-  };
-
+const CommandlineWelcomePart = ({ date, time }) => {
   return (
-    <div>
+    <>
       <div
         style={{
           padding: 2,
@@ -56,7 +14,7 @@ export function TerminalMessages() {
           fontSize: 12,
         }}
       >
-        last login: {sentDate} {sentTime} on ttys001
+        last login: {date} {time} on ttys000
         <span
           style={{
             padding: 2,
@@ -76,11 +34,14 @@ export function TerminalMessages() {
           <span>please type => "--start" to begin </span>
         </div>
       </div>
+    </>
+  );
+};
 
-      <div className={"terminal"}>
-        {/* command line output section */}
-
-        {storeData.map((e, i) => (
+const CommandlineOuputFiled = (source) => {
+  return source !== null
+    ? source.source.map((e, i) => (
+        <>
           <div className={"terminal-output"} key={i}>
             <div>
               <span
@@ -92,7 +53,7 @@ export function TerminalMessages() {
                   fontSize: 12,
                 }}
               >
-                {">"}
+                {">>"}
               </span>
               <span
                 style={{
@@ -103,9 +64,10 @@ export function TerminalMessages() {
                 }}
                 onChange={() => setCommandVal(e.msg)}
               >
-                {e.msg}
+                {e.command}
               </span>
             </div>
+
             <div>
               <span
                 style={{
@@ -121,34 +83,61 @@ export function TerminalMessages() {
               </span>
             </div>
           </div>
-        ))}
+        </>
+      ))
+    : null;
+};
 
-        <div
-          style={{
-            padding: 2,
-            color: "whitesmoke",
-            fontFamily: "Monaco",
-            fontSize: 12,
-          }}
-        >
-          {commands.map((e, i) => (
-            <li
-              style={{
-                padding: 2,
-                color: "whitesmoke",
-                fontFamily: "Monaco",
-                fontSize: 12,
-                listStyleType: "none",
-              }}
-              key={i}
-            >
-              {">> "}
-              {e}
-            </li>
-          ))}
-        </div>
+export function TerminalMessages() {
+  const [data, setData] = useState([]);
+  const [flag, setFlag] = useState(false);
+  const [id, setId] = useState(0);
+  const [commands, setCommands] = useState([]);
 
+  const sentTime = new Date().toLocaleTimeString();
+  const sentDate = new Date().toLocaleDateString();
+
+  const storeData = useSelector((state) => state.messages);
+  const readyCommands = useSelector((state) => Object.values(state.commands));
+
+  const dispatch = useDispatch();
+  const payload = {
+    id: id,
+    timestamp: sentTime,
+    command: data[0],
+    output: commands,
+  };
+
+  const handleMessage = (event) => {
+    event.preventDefault();
+    if (event.target.value.length > 35) {
+      setFlag(true);
+    } else {
+      setFlag(false);
+    }
+
+    setData([event.target.value]);
+  };
+
+  const keyPressed = (event) => {
+    if (event.key === "Enter" && event.target.value !== "") {
+      setId(id + 1);
+      dispatch(MessageActionsCreator.add_message(payload));
+      setData([]);
+      setFlag(false);
+      // handleOptions(payload.command.toLowerCase());
+    }
+  };
+
+  return (
+    <div>
+      {/* Commandline Welocome portion on the top */}
+      <CommandlineWelcomePart date={sentDate} time={sentTime} />
+      <div className={"terminal"}>
+        {/* command line output section */}
+        <CommandlineOuputFiled source={storeData} />
         {/* command line input section */}
+
         <div className={"terminal-input"}>
           <div>
             <span
@@ -205,3 +194,50 @@ export function TerminalMessages() {
 }
 
 export default TerminalMessages;
+
+{
+  /* <div
+              style={{
+                padding: 2,
+                color: "whitesmoke",
+                fontFamily: "Monaco",
+                fontSize: 12,
+              }}
+            > */
+}
+{
+  /* {Array.isArray(e.output) ? (
+                e.output.map((e, i) => (
+                  <li
+                    style={{
+                      padding: 2,
+                      color: "whitesmoke",
+                      fontFamily: "Monaco",
+                      fontSize: 12,
+                      listStyleType: "none",
+                    }}
+                    key={i}
+                  >
+                    {"> "}
+                    {e}
+                  </li>
+                ))
+              ) : (
+                <li
+                  style={{
+                    padding: 2,
+                    color: "whitesmoke",
+                    fontFamily: "Monaco",
+                    fontSize: 12,
+                    listStyleType: "none",
+                  }}
+                  // key={i}
+                >
+                  {"> "}
+                  {e}
+                </li>
+              )} */
+}
+{
+  /* </div> */
+}

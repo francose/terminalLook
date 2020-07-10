@@ -6,9 +6,9 @@
 - --help
 - --start
 - clear
-- hi (sayHi)
-- s (skills)
-- abm (aboutme)
-- e (education)
-- p (portfolio)
-- we (work_experience)
+- ./SayHi
+- ./skills
+- ./about
+- ./education
+- ./portfolio
+- ./work_experience
