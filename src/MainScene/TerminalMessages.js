@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CommandlineWelcomePart from "./commandline-header";
-import CommandlineOuputFiled from "./commandline-body";
+import CommandlineOuputField from "./commandline-body";
 import TerminalInput from "./commandline-input";
 
 export function TerminalMessages() {
@@ -17,7 +17,7 @@ export function TerminalMessages() {
       <CommandlineWelcomePart date={sentDate} time={sentTime} />
       <div className={"terminal"}>
         {/* command line output section */}
-        <CommandlineOuputFiled source={storeData} />
+        <CommandlineOuputField source={storeData} />
         {/* command line input section */}
         <TerminalInput time={sentTime} />
       </div>

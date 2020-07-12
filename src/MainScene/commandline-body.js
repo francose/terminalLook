@@ -1,6 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 
-const CommandlineOuputFiled = (source) => {
+const availableMethods = ["start", "echo", "clear"];
+const CommandlineOuput_bodyfield = (outputData) => {
+  const verify = availableMethods.find((x) => x === outputData.outputData);
+  return !verify ? (
+    <div>
+      <span
+        style={{
+          padding: 2,
+          color: "whitesmoke",
+          fontFamily: "Monaco",
+          fontSize: 12,
+        }}
+      >
+        {"> "}
+      </span>
+      <span
+        style={{
+          padding: 2,
+          color: "whitesmoke",
+          fontFamily: "Monaco",
+          fontSize: 12,
+        }}
+      >
+        {"cannot find the command please try again"}
+      </span>
+    </div>
+  ) : (
+    <div>
+      <span
+        style={{
+          padding: 2,
+          color: "whitesmoke",
+          fontFamily: "Monaco",
+          fontSize: 12,
+        }}
+      >
+        {"> "}
+      </span>
+      <span
+        style={{
+          padding: 2,
+          color: "whitesmoke",
+          fontFamily: "Monaco",
+          fontSize: 12,
+        }}
+      >
+        {verify}
+      </span>
+    </div>
+  );
+};
+
+const CommandlineOuputField = (source) => {
   return source !== null
     ? source.source.messages.map((e, i) => (
         <>
@@ -45,8 +97,9 @@ const CommandlineOuputFiled = (source) => {
               </span>
             </div>
           </div>
+          <CommandlineOuput_bodyfield outputData={e.command} />
         </>
       ))
     : null;
 };
-export default CommandlineOuputFiled;
+export default CommandlineOuputField;
