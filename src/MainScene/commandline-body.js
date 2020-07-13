@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const availableMethods = ["start", "echo", "clear"];
+const availableMethods = ["--start", "ls", "echo", "clear", "--help"];
+
 const CommandlineOuput_bodyfield = (outputData) => {
-  const verify = availableMethods.find((x) => x === outputData.outputData);
-  return !verify ? (
+  const [value, setValue] = useState([]);
+  const verify = availableMethods.includes(outputData.outputData);
+  const inputCommand = outputData.outputData.split(/ (.*)/);
+
+  useEffect(() => {
+    switch (inputCommand[0]) {
+      case "ls":
+        return setValue((list) => [
+          ...list,
+          "etc",
+          "opt",
+          "bin",
+          "./sadikerisen",
+          ".home",
+        ]);
+      case "echo":
+        return setValue(inputCommand.slice(1)[0]);
+      case "--help":
+        return setValue(availableMethods);
+      default:
+        return setValue(["cannot find the command"]);
+    }
+  }, []);
+
+  return verify ? (
     <div>
       <span
         style={{
@@ -15,16 +39,32 @@ const CommandlineOuput_bodyfield = (outputData) => {
       >
         {"> "}
       </span>
-      <span
-        style={{
-          padding: 2,
-          color: "whitesmoke",
-          fontFamily: "Monaco",
-          fontSize: 12,
-        }}
-      >
-        {"cannot find the command please try again"}
-      </span>
+      {Array.isArray(value) ? (
+        value.sort().map((e, i) => (
+          <span
+            style={{
+              padding: 2,
+              color: "whitesmoke",
+              fontFamily: "Monaco",
+              fontSize: 12,
+            }}
+            key={i}
+          >
+            {e}{" "}
+          </span>
+        ))
+      ) : (
+        <span
+          style={{
+            padding: 2,
+            color: "whitesmoke",
+            fontFamily: "Monaco",
+            fontSize: 12,
+          }}
+        >
+          value
+        </span>
+      )}
     </div>
   ) : (
     <div>
@@ -46,7 +86,7 @@ const CommandlineOuput_bodyfield = (outputData) => {
           fontSize: 12,
         }}
       >
-        {verify}
+        {value}
       </span>
     </div>
   );

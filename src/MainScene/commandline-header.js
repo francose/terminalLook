@@ -28,7 +28,8 @@ const CommandlineWelcomePart = ({ date, time }) => {
       </div>
       <div className={"weicomeMessageBox"}>
         <div className={"welcomeMessage"}>
-          <span>please type => "start" to begin </span>
+          <p>please type => "start" to begin </p>
+          <p>To see available commands => "--help" </p>
         </div>
       </div>
     </>
