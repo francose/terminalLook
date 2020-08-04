@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from "react";
 
-const availableMethods = ["--start", "ls", "echo", "clear", "more", "--help"];
-
+const availableMethods = ["--start", "ls", "cd" ,"echo", "clear", "--help"];
+const listView = ["etc", "opt","bin","./sadikerisen",".home"]
 
 const CommandlineOuput_bodyfield = (outputData) => {
   const [value, setValue] = useState([]);
   const verify = availableMethods.includes(outputData.outputData);
-  
+
   const inputCommand = outputData.outputData.split(/ (.*)/);
 
   useEffect(() => {
     switch (inputCommand[0]) {
       case "ls":
-        return setValue((list) => [
-          ...list,
-          "etc",
-          "opt",
-          "bin",
-          "./sadikerisen",
-          ".home",
-        ]);
+        return setValue(listView);
       case "echo":
         return setValue(inputCommand.slice(1)[0]);
       case "--help":
         return setValue(availableMethods);
+      case "--start":
+        return setInterval(() => {
+          setValue(["connecting..."]);
+        }, 5000);
+    
+      case "cd "+inputCommand[0]? inputCommand[0].toString():null:
+        return setValue(["cannot open file permission denied."])  
       default:
         return setValue(["cannot find the command"]);
     }
