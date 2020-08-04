@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 const CommandlineWelcomePart = ({ date, time }) => {
+  const more =  ["You can navigate through by typing available commands for example;", " to execute => ./sadikerisen" , "to run a command --start"]
   return (
     <>
       <div
@@ -27,10 +28,19 @@ const CommandlineWelcomePart = ({ date, time }) => {
         </span>
       </div>
       <div className={"weicomeMessageBox"}>
+      <div className={"welcomeMessageNext"}>
+         {
+            more.map((i)=>(
+              <p>{i}</p>
+            ))
+          }
+         </div>
         <div className={"welcomeMessage"}>
           <p>please type => "start" to begin </p>
           <p>To see available commands => "--help" </p>
+          
         </div>
+   
       </div>
     </>
   );

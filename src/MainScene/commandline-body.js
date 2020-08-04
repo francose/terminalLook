@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-const availableMethods = ["--start", "ls", "echo", "clear", "--help"];
+const availableMethods = ["--start", "ls", "echo", "clear", "more", "--help"];
+
 
 const CommandlineOuput_bodyfield = (outputData) => {
   const [value, setValue] = useState([]);
   const verify = availableMethods.includes(outputData.outputData);
+  
   const inputCommand = outputData.outputData.split(/ (.*)/);
 
   useEffect(() => {
