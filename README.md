@@ -1,10 +1,12 @@
 # Available Commands
 
 - ls
+- cd
 - echo
 - --help
 - --start
 - clear
+
 
 ## command line
 
