@@ -1,13 +1,33 @@
 import React, { useEffect, useState } from "react";
 
 const availableMethods = ["--start", "ls", "cd" ,"echo", "clear", "--help"];
-const listView = ["etc", "opt","bin","./sadikerisen",".home"]
+const listView = ["etc", "opt","bin","./sadikerisen", "home"]
+
+const matchStrings=(stringA, stringB)=>{
+  
+    if (stringB !== undefined){
+      
+        if (stringA.toString().split("").length !== stringB.toString().split("").length){ 
+          return false
+      }else {
+        for (const i in stringA.toString().split("")){
+          if (stringA.toString().split("")[i]=== stringB.toString().split("")[i]) return true
+          return  false
+        }
+      }
+    }
+    else{
+      return "wrong input"
+    }
+  
+}
 
 const CommandlineOuput_bodyfield = (outputData) => {
   const [value, setValue] = useState([]);
+  const [redirect , setRedirect] = useState(false);
   const verify = availableMethods.includes(outputData.outputData);
-
   const inputCommand = outputData.outputData.split(/ (.*)/);
+
 
   useEffect(() => {
     switch (inputCommand[0]) {
@@ -18,12 +38,24 @@ const CommandlineOuput_bodyfield = (outputData) => {
       case "--help":
         return setValue(availableMethods);
       case "--start":
+        const connecting = "connecting..."
         return setInterval(() => {
-          setValue(["connecting..."]);
-        }, 5000);
+          setValue([connecting]),
+          setRedirect(true)
+        }, 2000);
     
-      case "cd "+inputCommand[0]? inputCommand[0].toString():null:
-        return setValue(["cannot open file permission denied."])  
+      case inputCommand[0].includes("cd") ? inputCommand[0].toString(): null:
+            const verify = matchStrings(inputCommand[1].toString(), 
+            listView[listView.indexOf(!listView.includes(inputCommand[1]) ?
+             null
+             : inputCommand[1].toString()
+             )])
+            if (verify !== true){
+              return setValue(["Permission denied."]);      
+            }else{
+              return setValue([]);      
+            }
+          
       default:
         return setValue(["cannot find the command"]);
     }
@@ -90,6 +122,7 @@ const CommandlineOuput_bodyfield = (outputData) => {
       >
         {value}
       </span>
+
     </div>
   );
 };
