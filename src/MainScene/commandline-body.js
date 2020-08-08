@@ -50,10 +50,10 @@ const CommandlineOuput_bodyfield = (outputData) => {
              null
              : inputCommand[1].toString()
              )])
-            if (verify !== true){
-              return setValue(["Permission denied."]);      
+            if (verify === true){
+              return setValue([`interpreter: Permission denied`]);      
             }else{
-              return setValue([]);      
+              return setValue([`cd: no such file or directory: ${inputCommand[1]}`]);      
             }
           
       default:
