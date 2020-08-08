@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import * as setRedirection from "../redux/actions/setRedirect";
 
 const availableMethods = ["--start", "ls", "cd" ,"echo", "clear", "--help"];
 const listView = ["etc", "opt","bin","./sadikerisen", "home"]
 
 const matchStrings=(stringA, stringB)=>{
   
-    if (stringB !== undefined){
+    if (stringB !== undefined || stringB === null){
       
         if (stringA.toString().split("").length !== stringB.toString().split("").length){ 
           return false
@@ -24,11 +26,11 @@ const matchStrings=(stringA, stringB)=>{
 
 const CommandlineOuput_bodyfield = (outputData) => {
   const [value, setValue] = useState([]);
-  const [redirect , setRedirect] = useState(false);
   const verify = availableMethods.includes(outputData.outputData);
   const inputCommand = outputData.outputData.split(/ (.*)/);
+  const dispatch = useDispatch();
 
-
+  
   useEffect(() => {
     switch (inputCommand[0]) {
       case "ls":
@@ -39,26 +41,36 @@ const CommandlineOuput_bodyfield = (outputData) => {
         return setValue(availableMethods);
       case "--start":
         const connecting = "connecting..."
-        return setInterval(() => {
-          setValue([connecting]),
-          setRedirect(true)
-        }, 2000);
+        dispatch(setRedirection.setRedirect(true))
+        return   setValue([connecting])
+        // return setInterval(() => {
+        //   setValue([connecting]),
+       
+        //   // setRedirect(true)
+        // }, 800);
     
       case inputCommand[0].includes("cd") ? inputCommand[0].toString(): null:
-            const verify = matchStrings(inputCommand[1].toString(), 
-            listView[listView.indexOf(!listView.includes(inputCommand[1]) ?
-             null
-             : inputCommand[1].toString()
-             )])
-            if (verify === true){
-              return setValue([`interpreter: Permission denied`]);      
-            }else{
-              return setValue([`cd: no such file or directory: ${inputCommand[1]}`]);      
-            }
+        if(inputCommand[1]!==undefined){
+          const verify = matchStrings(inputCommand[1].toString(), 
+          listView[listView.indexOf(!listView.includes(inputCommand[1]) ?
+           null
+           : inputCommand[1].toString()
+           )])
+          if (verify === true){
+            return setValue([`interpreter: Permission denied`]);      
+          }else{
+            return setValue([`cd: no such file or directory: ${inputCommand[1]}`]);      
+          }
+        }else{
+          return setValue([`${inputCommand[0]}`]); 
+        }
+            
           
       default:
         return setValue(["cannot find the command"]);
     }
+
+
   }, []);
 
   return verify ? (

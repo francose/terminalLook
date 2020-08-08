@@ -9,10 +9,12 @@ export function TerminalMessages() {
   const sentDate = new Date().toLocaleDateString();
   const storeData = useSelector((state) => ({
     messages: state.messages,
+    redirect: state.redirect
   }));
-
+  
   return (
-    <div>
+    storeData.redirect !== true?(
+    <div >
       {/* Commandline Welocome portion on the top */}
       <CommandlineWelcomePart date={sentDate} time={sentTime} />
       <div className={"terminal"}>
@@ -21,7 +23,11 @@ export function TerminalMessages() {
         {/* command line input section */}
         <TerminalInput time={sentTime} />
       </div>
-    </div>
+    </div>):(
+      <div>
+        <h1>{`WELCOME`}</h1>
+      </div>
+    )
   );
 }
 

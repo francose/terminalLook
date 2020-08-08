@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 const CommandlineWelcomePart = ({ date, time }) => {
-  const more =  ["You can navigate through by typing available commands for example;", " to execute => ./sadikerisen" , "to run a command --start"]
+  const more =  ["You can navigate through by typing available commands for example;", " to execute => .</filename>" , "to run a command --foo"]
   return (
     <>
       <div
@@ -36,7 +36,7 @@ const CommandlineWelcomePart = ({ date, time }) => {
           }
          </div>
         <div className={"welcomeMessage"}>
-          <p>please type => "start" to begin </p>
+          <p>please type => "--start" to begin </p>
           <p>To see available commands => "--help" </p>
           
         </div>
