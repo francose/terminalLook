@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as setRedirection from "../redux/actions/setRedirect";
 
-const availableMethods = ["--start", "ls", "cd" ,"echo", "clear", "--help"];
+const availableMethods = ["start", "ls", "cd" ,"echo", "clear", "--help"];
 const listView = ["etc", "opt","bin","./sadikerisen", "home"]
 
 const matchStrings=(stringA, stringB)=>{
@@ -43,7 +43,7 @@ const CommandlineOuput_bodyfield = (outputData) => {
       case "--help":
         return setValue(availableMethods);
 
-      case command.includes("--start"):
+      case "start":
         const connecting = "connecting..."
         dispatch(setRedirection.setRedirect(true))
         return   setValue([connecting])
