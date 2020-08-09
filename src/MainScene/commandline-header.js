@@ -36,7 +36,7 @@ const CommandlineWelcomePart = ({ date, time }) => {
           }
          </div>
         <div className={"welcomeMessage"}>
-          <p>please type => "--start" to begin </p>
+          <p>please type => "start" to begin </p>
           <p>To see available commands => "--help" </p>
           
         </div>
