@@ -26,7 +26,8 @@ export function TerminalMessages() {
     </div>):(
       <div>
         {/* online resume / website */}
-        <h1>{`WELCOME`}</h1>
+
+        <h1 style={{"color":"white"}}>{`WELCOME`}</h1>
       </div>
     )
   );
