@@ -25,6 +25,7 @@ export function TerminalMessages() {
       </div>
     </div>):(
       <div>
+        {/* online resume / website */}
         <h1>{`WELCOME`}</h1>
       </div>
     )

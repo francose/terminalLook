@@ -27,19 +27,23 @@ const matchStrings=(stringA, stringB)=>{
 const CommandlineOuput_bodyfield = (outputData) => {
   const [value, setValue] = useState([]);
   const verify = availableMethods.includes(outputData.outputData);
-  const inputCommand = outputData.outputData.split(/ (.*)/);
+  const inputCommand = outputData.outputData.toLowerCase().split(/ (.*)/);
   const dispatch = useDispatch();
-
+  
   
   useEffect(() => {
-    switch (inputCommand[0]) {
+    const command = inputCommand[0]
+    switch (command) {
       case "ls":
         return setValue(listView);
+
       case "echo":
         return setValue(inputCommand.slice(1)[0]);
+
       case "--help":
         return setValue(availableMethods);
-      case "--start":
+
+      case command.includes("--start"):
         const connecting = "connecting..."
         dispatch(setRedirection.setRedirect(true))
         return   setValue([connecting])
@@ -49,7 +53,7 @@ const CommandlineOuput_bodyfield = (outputData) => {
         //   // setRedirect(true)
         // }, 800);
     
-      case inputCommand[0].includes("cd") ? inputCommand[0].toString(): null:
+      case command.includes("cd") ? command.toString(): null:
         if(inputCommand[1]!==undefined){
           const verify = matchStrings(inputCommand[1].toString(), 
           listView[listView.indexOf(!listView.includes(inputCommand[1]) ?
@@ -62,7 +66,7 @@ const CommandlineOuput_bodyfield = (outputData) => {
             return setValue([`cd: no such file or directory: ${inputCommand[1]}`]);      
           }
         }else{
-          return setValue([`${inputCommand[0]}`]); 
+          return setValue([`${command}`]); 
         }
             
           
