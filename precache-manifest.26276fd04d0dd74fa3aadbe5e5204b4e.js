@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b55359f3a35e604b57ccc7c8aaf7234c",
+    "revision": "2891a555ea2e1bb7d681f976411f88f2",
     "url": "/fserisen/index.html"
   },
   {
@@ -8,8 +8,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fserisen/static/css/2.af3c1da9.chunk.css"
   },
   {
-    "revision": "a51baacc6b1292f79dd3",
-    "url": "/fserisen/static/css/main.54642676.chunk.css"
+    "revision": "72e3caaf060f1d4413c6",
+    "url": "/fserisen/static/css/main.ea48be17.chunk.css"
   },
   {
     "revision": "64189e115754be7f921b",
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/fserisen/static/js/2.01982446.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a51baacc6b1292f79dd3",
-    "url": "/fserisen/static/js/main.c7d45893.chunk.js"
+    "revision": "72e3caaf060f1d4413c6",
+    "url": "/fserisen/static/js/main.65eba18d.chunk.js"
   },
   {
     "revision": "be2028cf2dbbea84e2c7",
