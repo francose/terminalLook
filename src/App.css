@@ -89,17 +89,18 @@
 }
 
 
-.LoaderText{
-  color:whitesmoke
-}
 .LoaderBox{
   display: flex;
   justify-content: center;
-  
+  margin-top: 40px;
 }
 
-.loader {
+.Typewriter__wrapper{
  
+  color:whitesmoke;
+  margin-top: 20px;
+}
+.loader {
   border: 6px solid #f3f3f3; /* Light grey */
   border-top: 6px solid #382a88; /* Blue */
   border-radius: 50%;
