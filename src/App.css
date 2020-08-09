@@ -96,7 +96,7 @@
 }
 
 .Typewriter__wrapper{
- 
+  caret-color: white;
   color:whitesmoke;
   margin-top: 20px;
 }

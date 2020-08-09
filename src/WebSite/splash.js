@@ -8,15 +8,20 @@ const Splash = (props)=>{
     },[])
 
     return <div>
-             <h1 >
+             <h3>
                  <Typewriter
+                    options={{
+                        devMode: false,
+                        autoStart: true,
+                        cursor: "",
+                      }}
                     onInit={(typewriter) => {
                     typewriter.typeString('Please wait while loading...')
                     .pauseFor(4500)
                     .deleteAll()
                     .start();
                 }}/>
-              </h1>
+              </h3>
              <div className={"LoaderBox"}>
                 <div className={"loader"}></div>
            </div>
